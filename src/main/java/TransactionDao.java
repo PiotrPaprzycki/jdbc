@@ -20,8 +20,9 @@ public class TransactionDao {
     }
 
     void save(Transaction transaction) {
-        final String sql = String.format("INSERT INTO transaction (type,description,amount) VALUES ('%s', '%s', '%s')",
-                transaction.getType(), transaction.getDescription(), transaction.getAmount());
+        // Prepare statement w lekcji
+        final String sql = String.format("INSERT INTO transaction (type,description,amount,data) VALUES ('%s', '%s', '%s', '%s')",
+                transaction.getType(), transaction.getDescription(), transaction.getAmount(), Date.valueOf(transaction.getLocalDate()));
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet generatedKeys = statement.getGeneratedKeys();
