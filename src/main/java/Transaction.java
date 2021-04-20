@@ -2,19 +2,19 @@ import java.time.LocalDate;
 
 public class Transaction {
     private Integer id;
-    private String type; // Implement as ENUM
+    private Type type; // Implement as ENUM
     private String description;
     private double amount;
     private LocalDate localDate;
 
-    public Transaction(String type, String description, double amount, LocalDate localDate) {
+    public Transaction(Type type, String description, double amount, LocalDate localDate) {
         this.type = type;
         this.description = description;
         this.amount = amount;
         this.localDate = localDate;
     }
 
-    public Transaction(Integer id, String type, String description, double amount, LocalDate localDate) {
+    public Transaction(Integer id, Type type, String description, double amount, LocalDate localDate) {
         this.id = id;
         this.type = type;
         this.description = description;
@@ -30,11 +30,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
