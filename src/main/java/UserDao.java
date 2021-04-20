@@ -1,5 +1,4 @@
 import java.sql.*;
-import java.util.Optional;
 
 public class UserDao {
     private final Connection connection;
@@ -20,15 +19,15 @@ public class UserDao {
         }
     }
 
-    void save(User user) {
-        final String sql = String.format("INSERT INTO user (imie, nazwisko) VALUES ('%s', '%s')",
-                user.getImie(), user.getNazwisko());
+    void save(Transaction transaction) {
+        final String sql = String.format("INSERT INTO transaction (type,description,amount) VALUES ('%s', '%s', '%s')",
+                transaction.getType(), transaction.getDescription(), transaction.getAmount());
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet generatedKeys = statement.getGeneratedKeys();
 
             if (generatedKeys.next()) {
-                user.setId(generatedKeys.getInt(1));
+                transaction.setId(generatedKeys.getInt(1));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

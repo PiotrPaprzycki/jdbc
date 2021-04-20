@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
@@ -16,8 +17,8 @@ public class Main {
 //            }
 //
 //        }
-        User user = new User("Piotr", "Paprzycki");
+        Transaction transaction = new Transaction("wydatek", "zakupy", 111, LocalDate.now());
         UserDao userDao = new UserDao();
-        userDao.save(user);
+        userDao.save(transaction);
     }
 }
