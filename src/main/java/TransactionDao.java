@@ -1,9 +1,9 @@
 import java.sql.*;
 
-public class UserDao {
+public class TransactionDao {
     private final Connection connection;
 
-    public UserDao() {
+    public TransactionDao() {
         try {
             this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_db?serverTimezone=UTC", "root", "pepe-23");
         } catch (SQLException e) {

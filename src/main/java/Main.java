@@ -18,7 +18,13 @@ public class Main {
 //
 //        }
         Transaction transaction = new Transaction("wydatek", "zakupy", 111, LocalDate.now());
-        UserDao userDao = new UserDao();
-        userDao.save(transaction);
+        Transaction transaction1 = new Transaction("przychód", "sprzedaz", 222, LocalDate.now());
+        Transaction transaction2 = new Transaction("wydatek", "zakupy", 333, LocalDate.now());
+
+        TransactionDao transactionDao = new TransactionDao();
+
+        transactionDao.save(transaction);
+        transactionDao.save(transaction1);
+        transactionDao.save(transaction2);
     }
 }
