@@ -5,8 +5,10 @@ public class TransactionDao {
 
     public TransactionDao() {
         try {
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_db?serverTimezone=UTC", "root", "pepe-23");
+            String url = "jdbc:mysql://localhost:3306/test_db?serverTimezone=UTC";
+            this.connection = DriverManager.getConnection(url, "root", "pepe-23");
         } catch (SQLException e) {
+            System.out.println("Error when trying to connect to database ... " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -30,6 +32,23 @@ public class TransactionDao {
             if (generatedKeys.next()) {
                 transaction.setId(generatedKeys.getInt(1));
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    void selectAll() {
+        final String sql = String.format("SELECT * FROM transaction");
+        try (Statement statement = connection.createStatement()) {
+            ResultSet allTransactions = statement.executeQuery(sql);
+            while (allTransactions.next()) {
+                String type = allTransactions.getString("type");
+                String description = allTransactions.getString("description");
+                Integer amount = allTransactions.getInt("amount");
+                Date date = allTransactions.getDate("data");
+                System.out.println(type + " " + description + " " + amount + " " + date);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

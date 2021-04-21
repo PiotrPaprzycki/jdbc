@@ -1,7 +1,9 @@
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) throws SQLException {
 
 //        try (
@@ -17,11 +19,45 @@ public class Main {
 //            }
 //
 //        }
+
+        while (true) {
+            System.out.println("1. Display all transactions");
+            System.out.println("2. Add transaction");
+            System.out.println("0. Quit");
+
+            Scanner scanner = new Scanner(System.in);
+            String option = scanner.nextLine();
+            scanner.nextLine();
+
+            switch (option) {
+                case "1":
+                    showAllTransactions();
+                    break;
+                case "2":
+                    addNewTransactions();
+                    break;
+                case "0":
+                    return;
+                default:
+                    System.out.println("Bad option!");
+            }
+
+        }
+
+
+    }
+
+    private static void showAllTransactions() {
+        TransactionDao transactionDao = new TransactionDao();
+        transactionDao.selectAll();
+    }
+
+    private static void addNewTransactions() {
+        TransactionDao transactionDao = new TransactionDao();
+
         Transaction transaction = new Transaction(Type.WYDATEK, "zakupy", 111, LocalDate.now());
         Transaction transaction1 = new Transaction(Type.PRZYCHOD, "sprzedaz", 222, LocalDate.now());
         Transaction transaction2 = new Transaction(Type.WYDATEK, "zakupy", 333, LocalDate.now());
-
-        TransactionDao transactionDao = new TransactionDao();
 
         transactionDao.save(transaction);
         transactionDao.save(transaction1);
