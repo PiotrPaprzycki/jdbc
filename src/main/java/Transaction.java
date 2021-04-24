@@ -2,7 +2,7 @@ import java.time.LocalDate;
 
 public class Transaction {
     private Integer id;
-    private Type type; // Implement as ENUM
+    private Type type;
     private String description;
     private double amount;
     private LocalDate localDate;

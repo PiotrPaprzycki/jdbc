@@ -22,7 +22,6 @@ public class TransactionDao {
     }
 
     void save(Transaction transaction) {
-        // Prepare statement w lekcji
         final String sql = String.format("INSERT INTO transaction (type,description,amount,data) VALUES ('%s', '%s', '%s', '%s')",
                 transaction.getType(), transaction.getDescription(), transaction.getAmount(), Date.valueOf(transaction.getLocalDate()));
         try (Statement statement = connection.createStatement()) {
@@ -37,10 +36,31 @@ public class TransactionDao {
         }
     }
 
-    void selectAll() {
-        final String sql = String.format("SELECT * FROM transaction");
-        try (Statement statement = connection.createStatement()) {
-            ResultSet allTransactions = statement.executeQuery(sql);
+    void selectWydatek() {
+        String sql = "SELECT * FROM transaction WHERE type like 'WYDATEK'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet allTransactions = preparedStatement.executeQuery();
+
+            while (allTransactions.next()) {
+                String type = allTransactions.getString("type");
+                String description = allTransactions.getString("description");
+                Integer amount = allTransactions.getInt("amount");
+                Date date = allTransactions.getDate("data");
+                System.out.println(type + " " + description + " " + amount + " " + date);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    void selectPrzychod() {
+        String sql = "SELECT * FROM transaction WHERE type like 'PRZYCHOD'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet allTransactions = preparedStatement.executeQuery();
+
             while (allTransactions.next()) {
                 String type = allTransactions.getString("type");
                 String description = allTransactions.getString("description");

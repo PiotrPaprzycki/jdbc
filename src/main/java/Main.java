@@ -21,7 +21,8 @@ public class Main {
 //        }
 
         while (true) {
-            System.out.println("1. Display all transactions");
+            System.out.println("1. Display all wydatki");
+            System.out.println("1. Display all przychody");
             System.out.println("2. Add transaction");
             System.out.println("0. Quit");
 
@@ -31,9 +32,12 @@ public class Main {
 
             switch (option) {
                 case "1":
-                    showAllTransactions();
+                    showAllWydatki();
                     break;
-                case "2":
+                    case "2":
+                    showAllPrzychody();
+                    break;
+                case "3":
                     addNewTransactions();
                     break;
                 case "0":
@@ -47,9 +51,14 @@ public class Main {
 
     }
 
-    private static void showAllTransactions() {
+    private static void showAllWydatki() {
         TransactionDao transactionDao = new TransactionDao();
-        transactionDao.selectAll();
+        transactionDao.selectWydatek();
+    }
+
+    private static void showAllPrzychody() {
+        TransactionDao transactionDao = new TransactionDao();
+        transactionDao.selectPrzychod();
     }
 
     private static void addNewTransactions() {
