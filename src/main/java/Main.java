@@ -6,8 +6,7 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
         while (true) {
-            System.out.println("1. Display all wydatki");
-            System.out.println("2. Display all przychody");
+            System.out.println("1. Display transactions (WYDATEK ? PRZYCHOD)");
             System.out.println("3. Add transaction");
             System.out.println("4. Update transaction");
             System.out.println("5. Delete transaction");
@@ -19,18 +18,15 @@ public class Main {
 
             switch (option) {
                 case "1":
-                    showAllWydatki();
+                    showTransactions();
                     break;
                 case "2":
-                    showAllPrzychody();
-                    break;
-                case "3":
                     addNewTransactions();
                     break;
-                case  "4":
+                case  "3":
                     updateTransaction();
                     break;
-                case "5":
+                case "4":
                     deleteTransaction();
                     break;
                 case "0":
@@ -39,6 +35,16 @@ public class Main {
                     System.out.println("Bad option!");
             }
         }
+    }
+
+    private static void showTransactions() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Typ ?");
+        String type = scanner.nextLine();
+        scanner.nextLine();
+
+        TransactionDao transactionDao = new TransactionDao();
+        transactionDao.selectTransaction(type);
     }
 
     private static void deleteTransaction() {
@@ -62,16 +68,6 @@ public class Main {
 
         TransactionDao transactionDao = new TransactionDao();
         transactionDao.updateTransaction(decription, newDecription);
-    }
-
-    private static void showAllWydatki() {
-        TransactionDao transactionDao = new TransactionDao();
-        transactionDao.selectWydatek();
-    }
-
-    private static void showAllPrzychody() {
-        TransactionDao transactionDao = new TransactionDao();
-        transactionDao.selectPrzychod();
     }
 
     private static void addNewTransactions() {

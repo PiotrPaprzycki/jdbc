@@ -56,29 +56,12 @@ public class TransactionDao {
         }
     }
 
-    void selectWydatek() {
-        String sql = "SELECT * FROM transaction WHERE type like 'WYDATEK'";
+    void selectTransaction(String transactionType) {
+        String sql = "SELECT * FROM transaction WHERE type LIKE ?";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet allTransactions = preparedStatement.executeQuery();
-
-            while (allTransactions.next()) {
-                String type = allTransactions.getString("type");
-                String description = allTransactions.getString("description");
-                Integer amount = allTransactions.getInt("amount");
-                Date date = allTransactions.getDate("data");
-                System.out.println(type + " " + description + " " + amount + " " + date);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    void selectPrzychod() {
-        String sql = "SELECT * FROM transaction WHERE type like 'PRZYCHOD'";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet allTransactions = preparedStatement.executeQuery();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, transactionType);
+            ResultSet allTransactions = statement.executeQuery();
 
             while (allTransactions.next()) {
                 String type = allTransactions.getString("type");
