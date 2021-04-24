@@ -1,6 +1,5 @@
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class TransactionDao {
     private final Connection connection;
@@ -23,18 +22,8 @@ public class TransactionDao {
         }
     }
 
-    void updateTransaction() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Opis?");
-        String decription = scanner.nextLine();
-        scanner.nextLine();
-        System.out.println("Nowy opis?");
-        String newDecription = scanner.nextLine();
-        scanner.nextLine();
-
+    void updateTransaction(String decription, String newDecription) {
         final String sql = String.format("UPDATE transaction SET description = ? WHERE description = ?");
-
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(2, decription);
             statement.setString(1, newDecription);
@@ -45,17 +34,10 @@ public class TransactionDao {
         }
     }
 
-    void deleteTransaction() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Opis?");
-        String decription = scanner.nextLine();
-        scanner.nextLine();
-
+    void deleteTransaction(String description) {
         final String sql = String.format("DELETE FROM transaction WHERE description = ?");
-
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, decription);
+            statement.setString(1, description);
             int row = statement.executeUpdate();
             System.out.println("Usunięto rekord: " + row);
         } catch (SQLException e) {
@@ -63,20 +45,9 @@ public class TransactionDao {
         }
     }
 
-    void addTransaction() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Typ transakcji? (WYDATEK ? PRZYCHOD)");
-        String type = scanner.nextLine();
-        System.out.println("Opis?");
-        String decription = scanner.nextLine();
-        System.out.println("Kwota?");
-        int amount = scanner.nextInt();
-        scanner.nextLine();
-
+    void addTransaction(String type, String decription, int amount) {
         final String sql = String.format("INSERT INTO transaction (type,description,amount,data) VALUES ('%s', '%s', '%s', '%s')",
                 type, decription, amount, String.valueOf(LocalDate.now()));
-
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             int row = statement.executeUpdate(sql);
             System.out.println("Dodano rekord: " + row);

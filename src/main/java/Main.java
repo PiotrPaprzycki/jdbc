@@ -42,13 +42,26 @@ public class Main {
     }
 
     private static void deleteTransaction() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Opis?");
+        String decription = scanner.nextLine();
+        scanner.nextLine();
+
         TransactionDao transactionDao = new TransactionDao();
-        transactionDao.deleteTransaction();
+        transactionDao.deleteTransaction(decription);
     }
 
     private static void updateTransaction() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Opis?");
+        String decription = scanner.nextLine();
+        scanner.nextLine();
+        System.out.println("Nowy opis?");
+        String newDecription = scanner.nextLine();
+        scanner.nextLine();
+
         TransactionDao transactionDao = new TransactionDao();
-        transactionDao.updateTransaction();
+        transactionDao.updateTransaction(decription, newDecription);
     }
 
     private static void showAllWydatki() {
@@ -62,7 +75,16 @@ public class Main {
     }
 
     private static void addNewTransactions() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Typ transakcji? (WYDATEK ? PRZYCHOD)");
+        String type = scanner.nextLine();
+        System.out.println("Opis?");
+        String decription = scanner.nextLine();
+        System.out.println("Kwota?");
+        int amount = scanner.nextInt();
+        scanner.nextLine();
+
         TransactionDao transactionDao = new TransactionDao();
-        transactionDao.addTransaction();
+        transactionDao.addTransaction(type, decription, amount);
     }
 }
