@@ -116,7 +116,6 @@ public class TransactionDao {
                 Date date = allTransactions.getDate("data");
                 System.out.println(type + " " + description + " " + amount + " " + date);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
