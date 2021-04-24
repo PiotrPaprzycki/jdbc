@@ -24,6 +24,7 @@ public class Main {
             System.out.println("2. Display all przychody");
             System.out.println("3. Add transaction");
             System.out.println("4. Update transaction");
+            System.out.println("5. Delete transaction");
             System.out.println("0. Quit");
 
             Scanner scanner = new Scanner(System.in);
@@ -42,12 +43,19 @@ public class Main {
                     break;
                 case  "4":
                     updateTransaction();
+                case "5":
+                    deleteTransaction();
                 case "0":
                     return;
                 default:
                     System.out.println("Bad option!");
             }
         }
+    }
+
+    private static void deleteTransaction() {
+        TransactionDao transactionDao = new TransactionDao();
+        transactionDao.deleteTransaction();
     }
 
     private static void updateTransaction() {

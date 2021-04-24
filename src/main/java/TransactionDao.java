@@ -45,6 +45,24 @@ public class TransactionDao {
         }
     }
 
+    void deleteTransaction() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Opis?");
+        String decription = scanner.nextLine();
+        scanner.nextLine();
+
+        final String sql = String.format("DELETE FROM transaction WHERE description = ?");
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, decription);
+            int row = statement.executeUpdate();
+            System.out.println("Usunięto rekord: " + row);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     void addTransaction() {
         Scanner scanner = new Scanner(System.in);
 
