@@ -23,6 +23,28 @@ public class TransactionDao {
         }
     }
 
+    void updateTransaction() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Opis?");
+        String decription = scanner.nextLine();
+        scanner.nextLine();
+        System.out.println("Nowy opis?");
+        String newDecription = scanner.nextLine();
+        scanner.nextLine();
+
+        final String sql = String.format("UPDATE transaction SET description = ? WHERE description = ?");
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(2, decription);
+            statement.setString(1, newDecription);
+            int row = statement.executeUpdate();
+            System.out.println("Zaktualizowano rekord: " + row);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     void addTransaction() {
         Scanner scanner = new Scanner(System.in);
 
@@ -39,8 +61,7 @@ public class TransactionDao {
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             int row = statement.executeUpdate(sql);
-            System.out.println(row);
-
+            System.out.println("Dodano rekord: " + row);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -59,7 +80,6 @@ public class TransactionDao {
                 Date date = allTransactions.getDate("data");
                 System.out.println(type + " " + description + " " + amount + " " + date);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -83,5 +103,4 @@ public class TransactionDao {
             throw new RuntimeException(e);
         }
     }
-
 }

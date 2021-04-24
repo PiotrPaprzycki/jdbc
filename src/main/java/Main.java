@@ -23,6 +23,7 @@ public class Main {
             System.out.println("1. Display all wydatki");
             System.out.println("2. Display all przychody");
             System.out.println("3. Add transaction");
+            System.out.println("4. Update transaction");
             System.out.println("0. Quit");
 
             Scanner scanner = new Scanner(System.in);
@@ -33,21 +34,25 @@ public class Main {
                 case "1":
                     showAllWydatki();
                     break;
-                    case "2":
+                case "2":
                     showAllPrzychody();
                     break;
                 case "3":
                     addNewTransactions();
                     break;
+                case  "4":
+                    updateTransaction();
                 case "0":
                     return;
                 default:
                     System.out.println("Bad option!");
             }
-
         }
+    }
 
-
+    private static void updateTransaction() {
+        TransactionDao transactionDao = new TransactionDao();
+        transactionDao.updateTransaction();
     }
 
     private static void showAllWydatki() {
@@ -63,12 +68,5 @@ public class Main {
     private static void addNewTransactions() {
         TransactionDao transactionDao = new TransactionDao();
         transactionDao.addTransaction();
-//        Transaction transaction = new Transaction(Type.WYDATEK, "zakupy", 111, LocalDate.now());
-//        Transaction transaction1 = new Transaction(Type.PRZYCHOD, "sprzedaz", 222, LocalDate.now());
-//        Transaction transaction2 = new Transaction(Type.WYDATEK, "zakupy", 333, LocalDate.now());
-//
-//        transactionDao.save(transaction);
-//        transactionDao.save(transaction1);
-//        transactionDao.save(transaction2);
     }
 }
